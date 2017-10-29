@@ -2,7 +2,15 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Entry = sequelize.define("Entry", {
-    checkIn: DataTypes.DATE,
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
+      primaryKey: true
+    },
+    checkIn: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
+    },
     checkOut: DataTypes.DATE,
     location: DataTypes.ENUM("OFFICE", "DEL" ,"HO"),
     workedHours: DataTypes.INTEGER,

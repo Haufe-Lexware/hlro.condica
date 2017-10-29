@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models');
+var Sequelize = require("sequelize");
+var moment = require('moment');
+const Op = Sequelize.Op;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -12,8 +15,25 @@ router.get('/', function(req, res, next) {
       plain: true
     }));
     console.log(created);
+    user.getEntries({where: 
+      {
+        checkin: {
+          [Op.gt]: moment().utc().startOf('day').toDate(),
+          [Op.lt]: moment().utc().endOf('day').toDate()
+        }
+      }
+    }).then(entries => {
+      if (entries.length === 0) {
+        user.createEntry({}).then(entry => {
+          return res.render('index', { title: 'Express', identity: req.session.accessToken, entry: entry, user: user });
+        });
+      }
+      else {
+        return res.render('index', { title: 'Express', identity: req.session.accessToken, entry: entries[0], user: user });
+      }
+    });
   });
-  res.render('index', { title: 'Express', user: req.session.accessToken });
+  
 });
 
 router.post('/checkin', function(req,res,next){

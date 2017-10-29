@@ -1,34 +1,51 @@
 extends layout
 
 block content
-  form.form-horizontal
-  fieldset
-    // Form Name
-    legend HLRO Condica
-    // Button (Double)
-    .form-group
-      label.col-md-4.control-label(for='button1id') Check in:
-      .col-md-8
-        button#button1id.btn.btn-success(name='button1id') IN
-
-        
-        button#button2id.btn.btn-danger(name='button2id') OUT
-    // Button
-    .form-group
-      label.col-md-4.control-label(for='singlebutton') Re-Generate Webhook Urls
-      .col-md-4
-        button#singlebutton.btn.btn-primary(name='singlebutton') Button
-    // Prepended text
-    .form-group
-      label.col-md-4.control-label(for='checkinwebhook') Check IN Url
-      .col-md-4
-        .input-group
-          span.input-group-addon checkin
-          input#checkinwebhook.form-control(name='checkinwebhook', placeholder='http://www.bamboocha.com', type='text')
-    // Prepended text
-    .form-group
-      label.col-md-4.control-label(for='checkoutwebhook') Check OUT Url
-      .col-md-4
-        .input-group
-          span.input-group-addon check-out
-          input#checkoutwebhook.form-control(name='checkoutwebhook', placeholder='http://www.cucubau.com', type='text')
+  #activate.center-vertical
+    form.form-horizontal(id='form-condica', method='post')
+      fieldset
+        // Form Name
+        legend HLRO Condica
+        .form-group
+          label.col-md-4.control-label(for='button1id') Check in:
+          .col-md-4
+            .input-group
+              button.btn.btn-success(name='button1id') IN
+              &nbsp;
+              button.btn.btn-danger(name='button2id') OUT
+        // CheckInTime
+        .form-group
+          label.col-md-4.control-label(for='checkintime') Check in Time:
+          .col-md-4
+            .input-group.clockpicker(data-placement="right", data-align="top", data-autoclose="true")
+              input.form-control(type='text', id='checkintime')
+              span.input-group-addon.glyphicon.glyphicon-time
+        // CheckInTime
+        .form-group
+          label.col-md-4.control-label(for='checkouttime') Check out Time:
+          .col-md-4
+            .input-group.clockpicker(data-placement="right", data-align="top", data-autoclose="true")
+              input.form-control(type='text', id='checkouttime')
+              span.input-group-addon.glyphicon.glyphicon-time
+        // Webhoook generate button
+        .form-group
+          label.col-md-4.control-label(for='singlebutton') Re-Generate Webhook Urls
+          .col-md-4
+            .input-group
+              button#singlebutton.btn.btn-primary(name='singlebutton') Regenerate
+        // Check IN Url
+        .form-group
+          label.col-md-4.control-label(for='checkinwebhook') Check IN Url
+          .col-md-4
+            .input-group
+              span.input-group-addon checkin
+              input#checkinwebhook.form-control(name='checkinwebhook', placeholder='http://www.bamboocha.com', type='text', value='#{user.token}')
+        // Check OUT Url
+        .form-group
+          label.col-md-4.control-label(for='checkoutwebhook') Check OUT Url
+          .col-md-4
+            .input-group
+              span.input-group-addon check-out
+              input#checkoutwebhook.form-control(name='checkoutwebhook', placeholder='http://www.cucubau.com', type='text', value='#{user.token}')
+  script.
+    $('.clockpicker').clockpicker();
