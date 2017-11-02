@@ -4,48 +4,76 @@ block content
   #activate.center-vertical
     form.form-horizontal(id='form-condica', method='post')
       fieldset
-        // Form Name
         legend HLRO Condica
         .form-group
-          label.col-md-4.control-label(for='button1id') Check in:
+          label.col-md-4.control-label(for='btnCheckIn') Check in:
           .col-md-4
-            .input-group
-              button.btn.btn-success(name='button1id') IN
+              button.btn.btn-success(id='btnCheckIn') IN
               &nbsp;
-              button.btn.btn-danger(name='button2id') OUT
+              button.btn.btn-danger(id='btnCheckOut') OUT
         // CheckInTime
         .form-group
           label.col-md-4.control-label(for='checkintime') Check in Time:
           .col-md-4
-            .input-group.clockpicker(data-placement="right", data-align="top", data-autoclose="true")
-              input.form-control(type='text', id='checkintime')
-              span.input-group-addon.glyphicon.glyphicon-time
-        // CheckInTime
+            .input-group.clockpicker(data-placement="bottom", data-align="bottom", data-autoclose="true")
+                input.form-control(type='text', id='checkintime', name='checkIn', value='#{entry.checkIn.getHours()}:#{entry.checkIn.getMinutes()}')
+                span.input-group-addon.glyphicon.glyphicon-time
+        // CheckOutTime
         .form-group
           label.col-md-4.control-label(for='checkouttime') Check out Time:
           .col-md-4
-            .input-group.clockpicker(data-placement="right", data-align="top", data-autoclose="true")
-              input.form-control(type='text', id='checkouttime')
+            .input-group.clockpicker(data-placement="bottom", data-align="bottom", data-autoclose="true")
+              if entry.checkOut
+                input.form-control(type='text', id='checkouttime', name='checkOut', value='#{entry.checkOut.getHours()}:#{entry.checkOut.getMinutes()}')
+              else
+                input.form-control(type='text', id='checkouttime', name='checkOut', value='')
               span.input-group-addon.glyphicon.glyphicon-time
-        // Webhoook generate button
+        // Worked Hours
         .form-group
-          label.col-md-4.control-label(for='singlebutton') Re-Generate Webhook Urls
-          .col-md-4
-            .input-group
-              button#singlebutton.btn.btn-primary(name='singlebutton') Regenerate
-        // Check IN Url
+            label.col-md-4.control-label(for='workedHours') Worked Hours
+            .col-md-4
+                .input-group
+                    input.form-control(type='number', name='workedHours', id='workedHours', required='true', value='#{entry.workedHours || "8"}', 
+                      min='0', max='8', pattern='\d*' step='1', size='1', maxlength='1', autocomplete='off', title='Doar valori de la 0 la 8')
+        // Overtime
         .form-group
-          label.col-md-4.control-label(for='checkinwebhook') Check IN Url
-          .col-md-4
-            .input-group
-              span.input-group-addon checkin
-              input#checkinwebhook.form-control(name='checkinwebhook', placeholder='http://www.bamboocha.com', type='text', value='#{user.token}')
-        // Check OUT Url
+            label.col-md-4.control-label(for='overtime') Overtime
+            .col-md-4
+                .input-group
+                    input.form-control(type='number', name='overtime', id='overtime', required='true', value='#{entry.overtime || "0"}', 
+                      min='0', max='9', pattern='\d*' step='1', size='1', maxlength='1', autocomplete='off')
+        // Location
         .form-group
-          label.col-md-4.control-label(for='checkoutwebhook') Check OUT Url
-          .col-md-4
-            .input-group
-              span.input-group-addon check-out
-              input#checkoutwebhook.form-control(name='checkoutwebhook', placeholder='http://www.cucubau.com', type='text', value='#{user.token}')
+            label.col-md-4.control-label(for='license') Location
+            .col-md-4
+                .input-group
+                    select(id='location', name='location', required)
+                        option(value='OFFICE', selected) Office
+                        option(value='DEL') Delegatie
+                        option(value='HO') Home Office
+    hr
+    .col-md-8
+      // Webhoook generate button
+      .form-group
+        label.col-md-4.control-label(for='singlebutton') Re-Generate Webhook Urls
+        .col-md-4
+          .input-group
+            button#singlebutton.btn.btn-primary(name='singlebutton') Regenerate
+    .col-md-8
+      // Check IN Url
+      .form-group
+        label.col-md-4.control-label(for='checkinwebhook') Check IN Url
+        .col-md-4
+          .input-group
+            span.input-group-addon checkin
+            input#checkinwebhook.form-control(name='checkinwebhook', placeholder='http://www.bamboocha.com', type='text', value='#{user.token}')
+    .col-md-8
+      // Check OUT Url
+      .form-group
+        label.col-md-4.control-label(for='checkoutwebhook') Check OUT Url
+        .col-md-4
+          .input-group
+            span.input-group-addon check-out
+            input#checkoutwebhook.form-control(name='checkoutwebhook', placeholder='http://www.cucubau.com', type='text', value='#{user.token}')
   script.
     $('.clockpicker').clockpicker();

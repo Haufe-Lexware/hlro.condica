@@ -36,8 +36,9 @@ router.get('/', function(req, res, next) {
   
 });
 
-router.post('/checkin', function(req,res,next){
-
+router.post('/', function(req,res,next){
+  console.log(req.body);
+  //TODO: copy paste code from above and update entry in db.
 });
 
 module.exports = router;
