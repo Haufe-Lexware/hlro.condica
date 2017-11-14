@@ -6,17 +6,18 @@ block content
       fieldset
         legend HLRO Condica
         .form-group
-          label.col-md-4.control-label(for='btnCheckIn') Check in:
+          label.col-md-4.control-label(for='btnSave') Check in:
           .col-md-4
-              button.btn.btn-success(id='btnCheckIn') IN
-              &nbsp;
-              button.btn.btn-danger(id='btnCheckOut') OUT
+              button.btn.btn-success(id='btnSave') Save
         // CheckInTime
         .form-group
           label.col-md-4.control-label(for='checkintime') Check in Time:
           .col-md-4
             .input-group.clockpicker(data-placement="bottom", data-align="bottom", data-autoclose="true")
-                input.form-control(type='text', id='checkintime', name='checkIn', value='#{entry.checkIn.getHours()}:#{entry.checkIn.getMinutes()}')
+                if entry.checkIn
+                  input.form-control(type='text', id='checkintime', name='checkIn', value='#{entry.checkIn.getHours()}:#{entry.checkIn.getMinutes()}')
+                else
+                  input.form-control(type='text', id='checkintime', name='checkIn', value='')
                 span.input-group-addon.glyphicon.glyphicon-time
         // CheckOutTime
         .form-group
@@ -48,32 +49,37 @@ block content
             .col-md-4
                 .input-group
                     select(id='location', name='location', required)
-                        option(value='OFFICE', selected) Office
-                        option(value='DEL') Delegatie
-                        option(value='HO') Home Office
+                        option(value='OFFICE', selected = '#{entry.location}'=='OFFICE') Office
+                        option(value='DEL', selected = '#{entry.location}'=='DEL') Delegatie
+                        option(value='HO', selected = '#{entry.location}'=='HO') Home Office
+        .form-group
+          input.form-control(type='hidden', name='entryId', value='#{entry.id || -1}')
     hr
-    .col-md-8
-      // Webhoook generate button
-      .form-group
-        label.col-md-4.control-label(for='singlebutton') Re-Generate Webhook Urls
-        .col-md-4
-          .input-group
-            button#singlebutton.btn.btn-primary(name='singlebutton') Regenerate
-    .col-md-8
-      // Check IN Url
-      .form-group
-        label.col-md-4.control-label(for='checkinwebhook') Check IN Url
-        .col-md-4
-          .input-group
-            span.input-group-addon checkin
-            input#checkinwebhook.form-control(name='checkinwebhook', placeholder='http://www.bamboocha.com', type='text', value='#{user.token}')
-    .col-md-8
-      // Check OUT Url
-      .form-group
-        label.col-md-4.control-label(for='checkoutwebhook') Check OUT Url
-        .col-md-4
-          .input-group
-            span.input-group-addon check-out
-            input#checkoutwebhook.form-control(name='checkoutwebhook', placeholder='http://www.cucubau.com', type='text', value='#{user.token}')
+    form.form-horizontal(id='form-condica', method='post', action='/generatetoken').col-lg-8
+      fieldset
+        .form-group
+          input.form-control(type='hidden', name='userId', value='#{user.id || -1}')
+        // Webhoook generate button
+        .form-group
+          label.col-md-4.control-label(for='singlebutton') Re-Generate Webhook Urls
+          .col-md-4
+            .input-group
+              button#singlebutton.btn.btn-primary(name='singlebutton') Regenerate
+        .col-xl-8
+          // Check IN Url
+          .form-group
+            label.col-md-4.control-label(for='checkinwebhook') Check IN Url
+            .col-xl-8
+              .input-group
+                span.input-group-addon checkin
+                input#checkinwebhook.form-control(name='checkinwebhook', placeholder='http://www.bamboocha.com', type='text', value='#{appUrl}/#{user.token}/checkin')
+        .col-xl-8
+          // Check OUT Url
+          .form-group
+            label.col-md-4.control-label(for='checkoutwebhook') Check OUT Url
+            .col-xl-8
+              .input-group
+                span.input-group-addon check-out
+                input#checkoutwebhook.form-control(name='checkoutwebhook', placeholder='http://www.cucubau.com', type='text', value='#{appUrl}/#{user.token}/checkout')
   script.
     $('.clockpicker').clockpicker();
