@@ -72,7 +72,7 @@ block content
             .col-xl-8
               .input-group
                 span.input-group-addon checkin
-                input#checkinwebhook.form-control(name='checkinwebhook', placeholder='http://www.bamboocha.com', type='text', value='#{appUrl}/#{user.token}/checkin')
+                input#checkinwebhook.form-control(name='checkinwebhook', placeholder='http://www.bamboocha.com', type='text', value='#{appUrl}/hooks/#{user.token}/checkin')
         .col-xl-8
           // Check OUT Url
           .form-group
@@ -80,6 +80,6 @@ block content
             .col-xl-8
               .input-group
                 span.input-group-addon check-out
-                input#checkoutwebhook.form-control(name='checkoutwebhook', placeholder='http://www.cucubau.com', type='text', value='#{appUrl}/#{user.token}/checkout')
+                input#checkoutwebhook.form-control(name='checkoutwebhook', placeholder='http://www.cucubau.com', type='text', value='#{appUrl}/hooks/#{user.token}/checkout')
   script.
     $('.clockpicker').clockpicker();

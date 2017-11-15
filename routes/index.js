@@ -19,8 +19,8 @@ router.get('/', function(req, res, next) {
           [Op.gt]: moment().utc().startOf('day').toDate(),
           [Op.lt]: moment().utc().endOf('day').toDate()
         },
-        userid : user.id
-      }
+        UserId : user.id
+      }, defaults: { UserId: user.id }
     }).spread((entry, created) => { 
       console.log(entry.get({plain:true}));  
       return res.render('index', { title: 'HLRO Condica', identity: req.session.accessToken, entry: entry, user: user, appUrl: process.env.APP_URL });
@@ -28,6 +28,18 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/report', function(req, res, next){
+  var currentUsername = req.session.accessToken.upn;
+  models.User.findOne({where: { username: currentUsername }}) 
+  .then( user => {
+    user.getEntries()
+    .then(entries => {
+      res.render('report', { entries : entries });
+    });
+  });
+});
+
+//Save entry
 router.post('/', function(req, res, next) {
   console.log(req.body);
   models.Entry.findById(req.body.entryId)
@@ -68,17 +80,6 @@ router.post('/generatetoken', function(req, res, next){
         res.redirect('/');
       });
     });
-});
-
-// router.get('/:user_id/tasks/:task_id/destroy', function (req, res) {
-  // id: req.params.task_id
-
-router.get('/:token/checkin', function(req, res, next){
-  //TODO: find user by token and set checkin to now()
-});
-
-router.get('/:token/checkout', function(req, res, next){
-  //TODO: find user by token and set checkin to now()
 });
 
 function generateRandomString() {

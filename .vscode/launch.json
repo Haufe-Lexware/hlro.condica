@@ -9,9 +9,13 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}\\bin\\www",
+            // "program": "${workspaceRoot}\\node_modules\\nodemon\\bin\\nodemon.js",
+            // "args": ["${workspaceRoot}\\bin\\www"],
+            // "runtimeArgs": ["--nolazy"],
             "env":{
                 "APP_URL":"http://www.condica.cloudapp.net"
-            }
+            },
+            "restart": false
         }
     ]
 }

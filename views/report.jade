@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    table.table-bordered.col-xl-8.well.table-striped.table-hover
+        thead
+            tr
+                th check-in
+                th check-out
+                th location
+                th worked hours
+                th overtime
+        tbody
+            if entries
+                each entry in entries
+                    tr
+                        td #{entry.checkIn}
+                        td #{entry.checkOut}
+                        td #{entry.location}
+                        td #{entry.workedHours}
+                        td #{entry.overtime}
+                        
+
+
