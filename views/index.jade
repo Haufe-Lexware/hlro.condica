@@ -65,21 +65,24 @@ block content
           .col-md-4
             .input-group
               button#singlebutton.btn.btn-primary(name='singlebutton') Regenerate
-        .col-xl-8
-          // Check IN Url
-          .form-group
-            label.col-md-4.control-label(for='checkinwebhook') Check IN Url
-            .col-xl-8
-              .input-group
-                span.input-group-addon checkin
-                input#checkinwebhook.form-control(name='checkinwebhook', placeholder='http://www.bamboocha.com', type='text', value='#{appUrl}/hooks/#{user.token}/checkin')
-        .col-xl-8
-          // Check OUT Url
-          .form-group
-            label.col-md-4.control-label(for='checkoutwebhook') Check OUT Url
-            .col-xl-8
-              .input-group
-                span.input-group-addon check-out
-                input#checkoutwebhook.form-control(name='checkoutwebhook', placeholder='http://www.cucubau.com', type='text', value='#{appUrl}/hooks/#{user.token}/checkout')
+        if user.token
+          .col-xl-8
+            // Check IN Url
+            .form-group
+              label.col-md-4.control-label(for='checkinwebhook') Check IN Url
+              .col-xl-8
+                .input-group
+                  span.input-group-addon checkin
+                  input#checkinwebhook.form-control(name='checkinwebhook', placeholder='http://www.bamboocha.com', type='text', value='#{appUrl}/hooks/#{user.token}/checkin')
+          .col-xl-8
+            // Check OUT Url
+            .form-group
+              label.col-md-4.control-label(for='checkoutwebhook') Check OUT Url
+              .col-xl-8
+                .input-group
+                  span.input-group-addon check-out
+                  input#checkoutwebhook.form-control(name='checkoutwebhook', placeholder='http://www.cucubau.com', type='text', value='#{appUrl}/hooks/#{user.token}/checkout')
+        else
+          p You don't have webhook URLs yet. Press Regenerate to go get some.
   script.
     $('.clockpicker').clockpicker();
