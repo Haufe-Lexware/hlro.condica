@@ -13,7 +13,7 @@
             // "args": ["${workspaceRoot}\\bin\\www"],
             // "runtimeArgs": ["--nolazy"],
             "env":{
-                "APP_URL":"http://www.condica.cloudapp.net"
+                // "WEBSITE_HOSTNAME":"http://www.condica.cloudapp.net",
             },
             "restart": false
         }
