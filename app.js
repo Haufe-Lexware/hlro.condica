@@ -23,7 +23,7 @@ console.log('Callback URL: ' + callbackUrl);
 var strategy = new OAuth2Strategy({
   authorizationURL: 'https://identity.haufe.com/adfs/oauth2/authorize',
   tokenURL: 'https://identity.haufe.com/adfs/oauth2/token',
-  clientID: 'FoundServ', // This is the ID of the ADFSClient created in ADFS via PowerShell
+  clientID: 'HLROCondica', // This is the ID of the ADFSClient created in ADFS via PowerShell
   clientSecret: 'shhh-its-a-secret', // This is ignored but required by the OAuth2Strategy
   callbackURL: (process.env.WEBSITE_HOSTNAME  || 'http://condica.azurewebsites.net/callback') //localhost for the moment, so only works if you run this on your machine
 },

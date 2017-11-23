@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
       }, defaults: { UserId: user.id }
     }).spread((entry, created) => { 
       console.log(entry.get({plain:true}));  
-      return res.render('index', { title: 'HLRO Condica', identity: req.session.accessToken, entry: entry, user: user, appUrl: process.env.APP_URL });
+      return res.render('index', { title: 'HLRO Condica', identity: req.session.accessToken, entry: entry, user: user, appUrl: (process.env.WEBSITE_HOSTNAME || 'http://localhost:3000') });
     });
   });
 });
