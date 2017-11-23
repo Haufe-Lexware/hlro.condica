@@ -39,7 +39,7 @@ function (accessToken, refreshToken, profile, done) {
 
 strategy.authorizationParams = function (options) {
 return {
-  resource: 'https://api.haufe-lexware.com' // An identifier corresponding to the Relying Party Trust, i just chose this cause FoundationalServices & Atlantic are api.haufe-lexware.com:)
+  resource: 'https://condica.haufe-lexware.ro' // An identifier corresponding to the Relying Party Trust, i just chose this cause FoundationalServices & Atlantic are api.haufe-lexware.com:)
 };
 };
 
