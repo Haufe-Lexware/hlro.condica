@@ -25,7 +25,7 @@ var strategy = new OAuth2Strategy({
   tokenURL: 'https://identity.haufe.com/adfs/oauth2/token',
   clientID: 'HLROCondica', // This is the ID of the ADFSClient created in ADFS via PowerShell
   clientSecret: 'shhh-its-a-secret', // This is ignored but required by the OAuth2Strategy
-  callbackURL: (process.env.WEBSITE_HOSTNAME  || 'http://condica.azurewebsites.net/callback') //localhost for the moment, so only works if you run this on your machine
+  callbackURL: (process.env.WEBSITE_HOSTNAME  || 'https://condica.azurewebsites.net/callback') //localhost for the moment, so only works if you run this on your machine
 },
 function (accessToken, refreshToken, profile, done) {
   if (refreshToken) {
@@ -39,7 +39,7 @@ function (accessToken, refreshToken, profile, done) {
 
 strategy.authorizationParams = function (options) {
 return {
-  resource: 'https://condica.haufe-lexware.ro' // An identifier corresponding to the Relying Party Trust, i just chose this cause FoundationalServices & Atlantic are api.haufe-lexware.com:)
+  resource: 'https://condica.azurewebsites.net/callback' // An identifier corresponding to the Relying Party Trust, i just chose this cause FoundationalServices & Atlantic are api.haufe-lexware.com:)
 };
 };
 
