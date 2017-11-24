@@ -11,7 +11,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:token/checkin', function(req, res, next){
-    //TODO: find user by token and set checkin to now()
     models.User.findOne({where: { token: req.params.token }})
     .then((user) => {
       models.Entry.findOrCreate({ 
@@ -23,12 +22,17 @@ router.get('/:token/checkin', function(req, res, next){
           UserId : user.id
         }
       }).spread((entry, created) => { 
-        console.log(entry.get({plain:true}));  
-        entry.checkIn = moment().utc().toDate();
-        entry.save()
-        .then(() => { 
-          res.send("All good, entry saved.");
-        });
+        if (created) {
+          console.log(entry.get({plain:true}));  
+          entry.checkIn = moment().utc().toDate();
+          entry.save()
+          .then(() => { 
+            res.send("All good, entry saved.");
+          });
+        }
+        else {
+          res.send("Checkin for today has already been set. The value is: " + entry.checkIn);
+        }
       });
     });
   });
@@ -50,7 +54,7 @@ router.get('/:token/checkout', function(req, res, next){
         entry.checkOut = moment().utc().toDate();
         entry.save()
         .then(() => { 
-          res.send("All good, entry saved.");
+          res.send("All good, entry saved with new check-out time of: " + entry.checkOut);
         });
       });
     });
