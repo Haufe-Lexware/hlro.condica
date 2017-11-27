@@ -17,9 +17,15 @@ var OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 
 var app = express();
 
-var callbackUrl = (process.env.WEBSITE_HOSTNAME  || 'http://localhost:3000') + '/callback' ;
+var callbackUrl = 'http://localhost:3000/callback' ;
 var OAuthResourceId = (process.env.OAUTH_RESOURCEID || 'https://api.haufe-lexware.com' );
 var OAuthClientId = (process.env.OAUTH_CLIENTID || 'FoundServ');
+
+
+//For Azure we have this built-in env var that gives us the DNS entry for the App Service
+if (process.env.WEBSITE_HOSTNAME){
+  callbackUrl = 'https://' + process.env.WEBSITE_HOSTNAME + '/callback';
+}
 
 
 console.log('Callback URL: ' + callbackUrl);
