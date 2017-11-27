@@ -18,7 +18,8 @@ var OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 var app = express();
 
 var callbackUrl = (process.env.WEBSITE_HOSTNAME  || 'http://localhost:3000') + '/callback' ;
-var OAuthClientId = (process.env.OAUTH_CLIENTID || 'https://api.haufe-lexware.com' );
+var OAuthResourceId = (process.env.OAUTH_RESOURCEID || 'https://api.haufe-lexware.com' );
+var OAuthClientId = (process.env.OAUTH_CLIENTID || 'FoundServ');
 
 
 console.log('Callback URL: ' + callbackUrl);
@@ -26,7 +27,7 @@ console.log('Callback URL: ' + callbackUrl);
 var strategy = new OAuth2Strategy({
   authorizationURL: 'https://identity.haufe.com/adfs/oauth2/authorize',
   tokenURL: 'https://identity.haufe.com/adfs/oauth2/token',
-  clientID: 'FoundServ', //'HLROCondica', // This is the ID of the ADFSClient created in ADFS via PowerShell
+  clientID: OAuthClientId, // This is the ID of the ADFSClient created in ADFS via PowerShell
   clientSecret: 'shhh-its-a-secret', // This is ignored but required by the OAuth2Strategy
   callbackURL: callbackUrl //localhost for the moment, so only works if you run this on your machine
 },
@@ -42,7 +43,7 @@ function (accessToken, refreshToken, profile, done) {
 
 strategy.authorizationParams = function (options) {
   return {
-    resource:  OAuthClientId // An identifier corresponding to the Relying Party Trust, i just chose this cause FoundationalServices & Atlantic are api.haufe-lexware.com:)
+    resource:  OAuthResourceId // An identifier corresponding to the Relying Party Trust
   };
 };
 
