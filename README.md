@@ -13,10 +13,18 @@ You may generate a set of URLs that are unique for your user so that you can aut
 
 ## Automate it !!!
 
+### IFTTT
+
 If you want to automate the check-in and check-out times you may use the Webhook URLs in whatever way you want. An example can be seen below on how to configure an IFTTT applet for automatically checking in when your smartphone connects to the work wifi network.
 
 
 ![IFTTT Tutorial](/public/images/Ifttt_condica.gif)
+
+### Microsoft Flow
+
+Another approach would be to use Microsoft Flow and to have dedicated buttons on your smartphone to explicitly trigger a checkin/out. Below is an example for setting up such a flow and the added benefit is that you will have a push notification on your phone to show the status message returned by the application.
+
+![MS Flow Tutorial](/public/images/Flow_condica.gif)
 
 
 ## TODO List
