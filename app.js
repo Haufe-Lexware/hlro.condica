@@ -18,14 +18,17 @@ var OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 var app = express();
 
 var callbackUrl = (process.env.WEBSITE_HOSTNAME  || 'http://localhost:3000') + '/callback' ;
+var OAuthClientId = (process.env.OAUTH_CLIENTID || 'https://api.haufe-lexware.com' );
+
+
 console.log('Callback URL: ' + callbackUrl);
 // Configure passport to integrate with ADFS
 var strategy = new OAuth2Strategy({
   authorizationURL: 'https://identity.haufe.com/adfs/oauth2/authorize',
   tokenURL: 'https://identity.haufe.com/adfs/oauth2/token',
-  clientID: 'HLROCondica', // This is the ID of the ADFSClient created in ADFS via PowerShell
+  clientID: 'FoundServ', //'HLROCondica', // This is the ID of the ADFSClient created in ADFS via PowerShell
   clientSecret: 'shhh-its-a-secret', // This is ignored but required by the OAuth2Strategy
-  callbackURL: 'https://condica.azurewebsites.net/callback' //localhost for the moment, so only works if you run this on your machine
+  callbackURL: callbackUrl //localhost for the moment, so only works if you run this on your machine
 },
 function (accessToken, refreshToken, profile, done) {
   if (refreshToken) {
@@ -38,13 +41,13 @@ function (accessToken, refreshToken, profile, done) {
 });
 
 strategy.authorizationParams = function (options) {
-return {
-  resource: 'https://condica.azurewebsites.net/callback' // An identifier corresponding to the Relying Party Trust, i just chose this cause FoundationalServices & Atlantic are api.haufe-lexware.com:)
-};
+  return {
+    resource:  OAuthClientId // An identifier corresponding to the Relying Party Trust, i just chose this cause FoundationalServices & Atlantic are api.haufe-lexware.com:)
+  };
 };
 
 strategy.userProfile = function (accessToken, done) {
-done(null, jwt.decode(accessToken));
+  done(null, jwt.decode(accessToken));
 };
 
 passport.use('provider', strategy);
