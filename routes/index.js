@@ -50,11 +50,22 @@ router.post('/', function(req, res, next) {
 
     if (entry.checkOut == null){
       //TODO: This needs to change if we allow editing dates in the past.
-       entry.checkOut = moment(req.body.checkOut, "HH:mm").toDate();
+      const checkOut = moment(req.body.checkOut, "HH:mm");
+
+      if (checkOut.isValid()) {
+        entry.checkOut = checkOut.toDate();
+      }
     }
     else {
       var enteredCheckOutTime = moment(req.body.checkOut, "HH:mm");
-      entry.checkOut = moment(entry.checkOut).hours(enteredCheckOutTime.hours()).minutes(enteredCheckOutTime.minutes());
+      var existingCheckOutTime = moment(entry.checkOut, "HH:mm");
+
+      if (!existingCheckOutTime.isValid()) {
+        // provide a fallback for existing invalid check-out values
+        existingCheckOutTime = moment(entry.checkIn);
+      }
+
+      entry.checkOut = existingCheckOutTime.hours(enteredCheckOutTime.hours()).minutes(enteredCheckOutTime.minutes());
     }
 
     var enteredCheckInTime = moment(req.body.checkIn, "HH:mm");
