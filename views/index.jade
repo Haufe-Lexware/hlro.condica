@@ -1,6 +1,11 @@
 extends layout
 
 block content
+  - function formatTime(date) {
+  -   const f = s => `0${s}`.substr(-2);
+  -   return `${f(date.getHours())}:${f(date.getMinutes())}`
+  - }
+
   #activate.center-vertical
     form.form-horizontal(id='form-condica', method='post')
       fieldset
@@ -15,7 +20,7 @@ block content
           .col-md-4
             .input-group.clockpicker(data-placement="bottom", data-align="bottom", data-autoclose="true")
                 if entry.checkIn
-                  input.form-control(type='text', id='checkintime', name='checkIn', value='#{entry.checkIn.getHours()}:#{entry.checkIn.getMinutes()}')
+                  input.form-control(type='text', id='checkintime', name='checkIn', value='#{formatTime(entry.checkIn)}')
                 else
                   input.form-control(type='text', id='checkintime', name='checkIn', value='')
                 span.input-group-addon.glyphicon.glyphicon-time
@@ -25,7 +30,7 @@ block content
           .col-md-4
             .input-group.clockpicker(data-placement="bottom", data-align="bottom", data-autoclose="true")
               if entry.checkOut
-                input.form-control(type='text', id='checkouttime', name='checkOut', value='#{entry.checkOut.getHours()}:#{entry.checkOut.getMinutes()}')
+                input.form-control(type='text', id='checkouttime', name='checkOut', value='#{formatTime(entry.checkOut)}')
               else
                 input.form-control(type='text', id='checkouttime', name='checkOut', value='')
               span.input-group-addon.glyphicon.glyphicon-time
