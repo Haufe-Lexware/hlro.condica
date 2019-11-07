@@ -15,7 +15,7 @@ block content
           .col-md-4
             .input-group.clockpicker(data-placement="bottom", data-align="bottom", data-autoclose="true")
                 if entry.checkIn
-                  input.form-control(type='text', id='checkintime', name='checkIn', value='#{entry.checkIn.getHours()}:#{entry.checkIn.getMinutes()}')
+                  input.form-control(type='text', id='checkintime', name='checkIn', value=entry.checkIn.getHours() + ':' + entry.checkIn.getMinutes())
                 else
                   input.form-control(type='text', id='checkintime', name='checkIn', value='')
                 span.input-group-addon.glyphicon.glyphicon-time
@@ -25,7 +25,7 @@ block content
           .col-md-4
             .input-group.clockpicker(data-placement="bottom", data-align="bottom", data-autoclose="true")
               if entry.checkOut
-                input.form-control(type='text', id='checkouttime', name='checkOut', value='#{entry.checkOut.getHours()}:#{entry.checkOut.getMinutes()}')
+                input.form-control(type='text', id='checkouttime', name='checkOut', value=entry.checkOut.getHours()+ ':' + entry.checkOut.getMinutes())
               else
                 input.form-control(type='text', id='checkouttime', name='checkOut', value='')
               span.input-group-addon.glyphicon.glyphicon-time
@@ -34,14 +34,14 @@ block content
             label.col-md-4.control-label(for='workedHours') Worked Hours
             .col-md-4
                 .input-group
-                    input.form-control(type='number', name='workedHours', id='workedHours', required='true', value='#{entry.workedHours || "8"}', 
+                    input.form-control(type='number', name='workedHours', id='workedHours', required='true', value=entry.workedHours || "8", 
                       min='0', max='8', pattern='\d*' step='1', size='1', maxlength='1', autocomplete='off', title='Doar valori de la 0 la 8')
         // Overtime
         .form-group
             label.col-md-4.control-label(for='overtime') Overtime
             .col-md-4
                 .input-group
-                    input.form-control(type='number', name='overtime', id='overtime', required='true', value='#{entry.overtime || "0"}', 
+                    input.form-control(type='number', name='overtime', id='overtime', required='true', value=entry.overtime || "0", 
                       min='0', max='9', pattern='\d*' step='1', size='1', maxlength='1', autocomplete='off')
         // Location
         .form-group
@@ -49,16 +49,16 @@ block content
             .col-md-4
                 .input-group
                     select(id='location', name='location', required)
-                        option(value='OFFICE', selected = '#{entry.location}'=='OFFICE') Office
-                        option(value='DEL', selected = '#{entry.location}'=='DEL') Delegatie
-                        option(value='HO', selected = '#{entry.location}'=='HO') Home Office
+                        option(value='OFFICE', selected = entry.location=='OFFICE') Office
+                        option(value='DEL', selected = entry.location=='DEL') Delegatie
+                        option(value='HO', selected = entry.location=='HO') Home Office
         .form-group
-          input.form-control(type='hidden', name='entryId', value='#{entry.id || -1}')
+          input.form-control(type='hidden', name='entryId', value=entry.id || -1)
     hr
     form.form-horizontal(id='form-condica', method='post', action='/generatetoken').col-lg-8
       fieldset
         .form-group
-          input.form-control(type='hidden', name='userId', value='#{user.id || -1}')
+          input.form-control(type='hidden', name='userId', value=user.id || -1)
         // Webhoook generate button
         .form-group
           label.col-md-4.control-label(for='singlebutton') Re-Generate Webhook Urls
@@ -73,7 +73,7 @@ block content
               .col-xl-8
                 .input-group
                   span.input-group-addon checkin
-                  input#checkinwebhook.form-control(name='checkinwebhook', placeholder='press Regenerate to create webhook urls', type='text', value='https://#{appUrl}/hooks/#{user.token}/checkin')
+                  input#checkinwebhook.form-control(name='checkinwebhook', placeholder='press Regenerate to create webhook urls', type='text', value='https://'+ appUrl + '/hooks/' + user.token + '/checkin')
           .col-xl-8
             // Check OUT Url
             .form-group
@@ -81,7 +81,7 @@ block content
               .col-xl-8
                 .input-group
                   span.input-group-addon check-out
-                  input#checkoutwebhook.form-control(name='checkoutwebhook', placeholder='press Regenerate to create webhook urls', type='text', value='https://#{appUrl}/hooks/#{user.token}/checkout')
+                  input#checkoutwebhook.form-control(name='checkoutwebhook', placeholder='press Regenerate to create webhook urls', type='text', value='https://'+ appUrl + '/hooks/' + user.token + '/checkout')
         else
           p You don't have webhook URLs yet. Press Regenerate to go get some.
   script.
