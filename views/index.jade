@@ -2,8 +2,8 @@ extends layout
 
 block content
   - function formatTime(date) {
-  -   const f = s => `0${s}`.substr(-2);
-  -   return `${f(date.getHours())}:${f(date.getMinutes())}`
+  -   const addLeadingZero = numericValue => `0${numericValue}`.substr(-2);
+  -   return `${addLeadingZero(date.getHours())}:${addLeadingZero(date.getMinutes())}`
   - }
 
   #activate.center-vertical
